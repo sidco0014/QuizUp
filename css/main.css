@@ -329,6 +329,8 @@ nav {
 .answer--choices {
     display: inline-block;
     width: 100%;
+    list-style: none;
+    margin-left: 0;
 }
 
 .answer--choices li {
@@ -336,16 +338,23 @@ nav {
     font-weight: 400;
     float: left;
     margin-left: 50px;
-    cursor: pointer;
-}
-
-.answer--choices li:hover {
-    color: #ff3300;
-    transition: all 0.3s ease-in-out;
 }
 
 .answer--choices li:first-child {
     margin-left: 0;
+}
+
+.answer--choices li b {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.answer--choices li input[type="radio"] {
+    cursor: pointer;
+    height: 30px;
+    width: 20px;
+    margin-bottom: 0;
+    vertical-align: bottom;
 }
 
 @media only screen and (max-width: 768px) {
