@@ -28,6 +28,7 @@ span,
 a,
 div {
     font-family: 'Montserrat', sans-serif !important;
+    color: #333;
 }
 
 ::-moz-selection {
@@ -315,9 +316,34 @@ nav {
 .question--wrapper {
     width: 800px;
     height: 300px;
-    margin: auto;
-    padding: 10px;
+    padding: 20px;
     border: 1px solid #ccc;
     box-shadow: 2px 5px 5px #c2c2c2;
-    margin-top: 100px;
+    margin: 100px auto auto;
+}
+.question--text {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.answer--choices {
+    display: inline-block;
+    width: 100%;
+}
+
+.answer--choices li {
+    font-size: 1.2rem;
+    font-weight: 400;
+    float: left;
+    margin-left: 50px;
+    cursor: pointer;
+}
+
+.answer--choices li:hover {
+    color: #ff3300;
+    transition: all 0.3s ease-in-out;
+}
+
+.answer--choices li:first-child {
+    margin-left: 0;
 }

@@ -50,7 +50,7 @@ function firstQuestionObject(first_question_obj) {
         question_text.html(first_question_obj[i].question_txt);
         for (var j = 0; j < first_question_obj[i].question_options.length; j++) {
             result.push('<li>');
-            result.push(first_question_obj[i].question_options[j]);
+            result.push("<b>"+ first_question_obj[i].question_options[j] + "</b>");
             result.push('</li>');
             answer_choices.html(result.join(''));
         }
@@ -65,7 +65,7 @@ function nextQuestionObjects(question_obj) {
         var result =[];
         for (var j = 0; j < question_obj[i].question_options.length; j++) {
             result.push('<li>');
-            result.push(question_obj[i].question_options[j]);
+            result.push("<b>"+ question_obj[i].question_options[j] + "</b>");
             result.push('</li>');
             answer_choices.html(result.join(''));
         }
