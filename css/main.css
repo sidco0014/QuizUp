@@ -314,7 +314,7 @@ nav {
 }
 
 .question--wrapper {
-    width: 800px;
+    width: 70%;
     height: 300px;
     padding: 20px;
     border: 1px solid #ccc;
@@ -346,4 +346,11 @@ nav {
 
 .answer--choices li:first-child {
     margin-left: 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .answer--choices li{
+        margin-left: 0;
+        float: none;
+    }
 }
