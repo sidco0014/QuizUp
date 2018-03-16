@@ -315,10 +315,6 @@ nav {
     position: relative;
 }
 
-section {
-    margin-bottom: 50px;
-}
-
 .title {
     text-align: center;
     color: white;
@@ -424,6 +420,7 @@ input[type='radio']:checked:before {
     width: 100%;
     text-align: center;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .btn-stats, .btn-submit {

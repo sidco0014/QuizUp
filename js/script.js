@@ -174,11 +174,13 @@ function onGameEnd(question_arr) {
 function renderGameAfterLoad() {
     var game_wrapper = $('.game--wrapper');
     var submit_button = $('#next-question');
+    var submit_btn_wrapper = $('.submit--buttons');
     submit_button.attr("disabled", true);
 
     setTimeout(function () {
-        game_wrapper.fadeIn();
+        game_wrapper.show();
         countDownTimer();
         submit_button.attr("disabled", false);
+        submit_btn_wrapper.css("margin-top", 0);
     }, 3500);
 }
