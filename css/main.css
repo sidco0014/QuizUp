@@ -392,7 +392,6 @@ input[type='radio']:checked:before {
 }
 
 .btn-stats, .btn-submit {
-    padding: 10px;
     background-color: #1779ba;
     width: 200px;
     height: 50px;
@@ -403,6 +402,11 @@ input[type='radio']:checked:before {
     border-radius: 2px;
     cursor: pointer;
     color: white;
+}
+
+.btn-stats a {
+    color: white;
+    padding: 24px;
 }
 
 .btn-submit:hover, .btn-stats:hover {
@@ -494,5 +498,11 @@ input[type='radio']:checked:before {
     .answer--choices li {
         margin-left: 0;
         float: none;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .btn-submit {
+        margin-bottom: 20px;
     }
 }
