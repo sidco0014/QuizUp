@@ -28,12 +28,16 @@
     <nav>
         <div class="row">
             <div class="large-12 columns">
-                <h1 class="title">Welcome to QuizUp!</h1>
+                <h1 class="title">QuizzUp!</h1>
             </div>
         </div>
     </nav>
+    <div class="question-number-container">
+        <h5 class="question--number"></h5>
+        <h5 class="question--points"></h5>
+    </div>
     <div class="timer">
-        <h3 id="time--elapsed"></h3>
+        <h4 id="time--elapsed"></h4>
     </div>
     <section>
         <div class="container">
@@ -45,8 +49,8 @@
                             <ul type="a" class="answer--choices"></ul>
                         </div>
                         <div class="submit--buttons">
-                            <button class="button" id="next-question" value="Start Game">Start Game</button>
-                            <button class="button" id="check-stats">Check Stats</button>
+                            <button class="btn-submit" id="next-question" value="Start Game">Start Game</button>
+                            <button class="btn-stats" id="check-stats">Check Stats</button>
                         </div>
                     </div>
                 </div>

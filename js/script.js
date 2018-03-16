@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    var next_question_btn = $('#next-question');
     var question_arr = [
         {
             question_id: 'Q_1',
+            question_number: 1,
             question_txt: "Today is what day?",
             question_points: 100,
             question_options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
@@ -10,44 +10,41 @@ $(document).ready(function () {
         },
         {
             question_id: 'Q_2',
+            question_number: 2,
             question_txt: "What date is your birthday?",
             question_points: 100,
             question_options: [14, 15, 16, 17],
             question_correct_ans: 14
-
         },
         {
             question_id: 'Q_3',
+            question_number: 3,
             question_txt: "What is the Bitcoin Value today?",
             question_points: 100,
             question_options: [10000, 9000, 8000, 7000],
             question_correct_ans: 8000
-
         },
         {
             question_id: 'Q_4',
+            question_number: 4,
             question_txt: "What is the ETH Value today?",
             question_points: 100,
             question_options: [600, 700, 650, 550],
             question_correct_ans: 600
-
         }
     ];
-
-
-    // var question_obj = question_arr.splice(0, 1);
-    // renderQuestionObjects(question_obj);
     gameRenderingConfigs(question_arr);
-
 });
 
 function renderQuestionObjects(question_obj) {
     var question_text = $('.question--text');
     var answer_choices = $('.answer--choices');
-    // var next_question_btn = $('#next-question');
+    var question_number = $('.question--number');
+    var question_points = $('.question--points');
 
     for (var i = 0; i < question_obj.length; i++) {
         question_text.html(question_obj[i].question_txt);
+        question_number.html("Question:  " + question_obj[i].question_number + "/" + 4);
         var question_correct_answer = question_obj[i].question_correct_ans;
         var result = [];
         for (var j = 0; j < question_obj[i].question_options.length; j++) {
@@ -64,12 +61,14 @@ function renderQuestionObjects(question_obj) {
 
         $('input[name="' + question_obj[i].question_id + '"]:radio').on('click', function () {
             var selected_answer_choice = $(this).val();
+            var radioName = $(this).attr("name");
             if ($('input:radio:checked')) {
-                $(this).attr("disabled", true);
+                $(":radio[name='" + radioName + "']").attr({"disabled": true});
             }
             checkCorrectAnswer(question_correct_answer, selected_answer_choice, question_obj);
         });
     }
+    question_points.html("Points : " + totalPoints);
 }
 
 //Sets a flag if correct answer is given by the user
@@ -126,7 +125,6 @@ function countDownTimer() {
 
 function startTimer() {
     setTimeout(countDownTimer, 1000);
-    return;
 }
 
 function gameRenderingConfigs(question_arr) {
@@ -137,9 +135,7 @@ function gameRenderingConfigs(question_arr) {
             countDownTimer();
         }
         $(this).text("Submit");
-
         onGameEnd(question_arr);
-
         var question_obj = question_arr.splice(0, 1);
         renderQuestionObjects(question_obj);
     });
@@ -150,8 +146,9 @@ function onGameEnd(question_arr) {
     if (question_arr.length === 0) {
         $('#check-stats').css({display: "inline-block"});
         $('.question--content').css({color: "#ccc"});
-        $('input:radio').attr("disabled", true);
-        $('#next-question').attr("disabled", true);
+        $('#next-question').attr({
+            "disabled": 'true',
+            "style": "cursor:not-allowed"
+        });
     }
-
 }
