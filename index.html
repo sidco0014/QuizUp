@@ -32,14 +32,22 @@
             </div>
         </div>
     </nav>
+    <div class="timer">
+        <h3 id="time--elapsed"></h3>
+    </div>
     <section>
         <div class="container">
             <div class="row">
                 <div class="large-12 columns">
                     <div class="question--wrapper">
-                        <h3 class="question--text"></h3>
-                        <ul type="a" class="answer--choices"></ul>
-                        <button class="button" id="next-question">Next</button>
+                        <div class="question--content">
+                            <h3 class="question--text"></h3>
+                            <ul type="a" class="answer--choices"></ul>
+                        </div>
+                        <div class="submit--buttons">
+                            <button class="button" id="next-question" value="Start Game">Start Game</button>
+                            <button class="button" id="check-stats">Check Stats</button>
+                        </div>
                     </div>
                 </div>
             </div>

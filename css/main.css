@@ -299,6 +299,11 @@ textarea {
 /*
 Custom CSS Style
  */
+
+body {
+    background-color: #eaecef !important;
+}
+
 nav {
     height: 115px;
     background-color: #173754;
@@ -312,14 +317,20 @@ nav {
     width: 100%;
     bottom: 0;
 }
+.timer {
+    float: right;
+    padding: 10px;
+    margin-right: 20px;
+}
 
 .question--wrapper {
-    width: 70%;
-    height: 300px;
+    width: 60%;
+    height: 250px;
     padding: 20px;
     border: 1px solid #ccc;
     box-shadow: 2px 5px 5px #c2c2c2;
     margin: 100px auto auto;
+    background-color: white;
 }
 .question--text {
     font-weight: 600;
@@ -362,4 +373,13 @@ nav {
         margin-left: 0;
         float: none;
     }
+}
+
+.submit--buttons {
+    width: 100%;
+    text-align: center;
+}
+
+#check-stats {
+    display: none;
 }
