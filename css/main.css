@@ -423,6 +423,7 @@ input[type='radio']:checked:before {
 .submit--buttons {
     width: 100%;
     text-align: center;
+    margin-top: 50px;
 }
 
 .btn-stats, .btn-submit {
@@ -453,11 +454,42 @@ input[type='radio']:checked:before {
 
 .progress--bar {
     width: 50%;
-    margin: auto;
     display: none;
-    margin-top: 20px;
+    margin: 20px auto auto;
 }
 
 .progress-meter {
     transition: all 0.5s ease;
+}
+
+.loading--wrapper {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    display: none;
+}
+
+.loading--text{
+    position: relative;
+    color: rgba(0, 0, 0, .3);
+    font-size: 3em
+}
+
+.loading--text:before {
+    content: attr(data-text);
+    position: absolute;
+    overflow: hidden;
+    max-width: 7em;
+    white-space: nowrap;
+    color: #fff;
+    animation: loading 5s linear;
+}
+@keyframes loading {
+    0% {
+        max-width: 0;
+    }
+}
+
+.game--wrapper{
+    display: none;
 }
