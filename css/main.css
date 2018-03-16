@@ -326,12 +326,20 @@ section {
     width: 100%;
     bottom: 0;
     font-size: 4rem;
+    text-shadow: 2px 3px 0 #898999;
 }
 .timer {
     float: right;
     padding: 10px;
     margin-right: 20px;
     color: white;
+}
+
+@media only screen and (max-width: 768px) {
+    .timer{
+        text-align: center;
+        float: none;
+    }
 }
 
 .question--wrapper {
@@ -347,7 +355,7 @@ section {
     color: white;
 }
 
-.question--number, .question--points {
+.question--points {
     text-align: center;
     color: white;
 }
@@ -441,4 +449,15 @@ input[type='radio']:checked:before {
 
 #check-stats {
     display: none;
+}
+
+.progress--bar {
+    width: 50%;
+    margin: auto;
+    display: none;
+    margin-top: 20px;
+}
+
+.progress-meter {
+    transition: all 0.5s ease;
 }
