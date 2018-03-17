@@ -31,45 +31,80 @@ $(document).ready(function () {
     ];
     var arr_len = question_arr.length;
     gameRenderingConfigs(question_arr, arr_len);
+    renderPlayerStatsScreen();
 });
 
-function renderQuestionObjects(question_obj, arr_len) {
-    var question_text = $('.question--text');
-    var answer_choices = $('.answer--choices');
-    var question_points = $('.question--points');
+function gameRenderingConfigs(question_arr, arr_len) {
+    var startGameCounter = 0;
+    var progressBarHandler = $('.progress-meter');
+    var progress_length;
+    var progress_bar_text = $('.progress-meter-text');
+    var progress_bar_wrapper = $('.progress--bar');
+    var loading_wrapper = $('.loading--wrapper');
+    var progressCounter = 0;
 
-    for (var i = 0; i < question_obj.length; i++) {
-        question_text.html(question_obj[i].question_txt);
-        var question_correct_answer = question_obj[i].question_correct_ans;
+    $('#next-question').on('click', function () {
+        progress_bar_wrapper.css("display", "block");
+        var question_points = $('.question--points');
+        startGameCounter++;
+        if (startGameCounter === 1) {
+            loading_wrapper.show().delay(3000).fadeOut();
+            renderGameAfterLoad();
+        }
+
+        if (startGameCounter >= 2 && startGameCounter <= question_arr.length + 1) {
+            progressCounter++;
+            progress_length = Math.round((progressCounter / arr_len) * 100);
+            progressBarHandler.width(progress_length + "%");
+            progress_bar_text.html(progress_length + "%");
+        }
+        $(this).text("Submit");
+        question_points.html("Score : " + '<b>' + totalPoints + '</b>');
+        renderQuestionObjects(question_arr, startGameCounter - 1);
+    });
+}
+
+//Render Question details
+function renderQuestionObjects(question_obj, counter) {
+    if (counter < question_obj.length) {
+        var question_text = $('.question--text');
+        var answer_choices = $('.answer--choices');
+        var question_correct_answer = question_obj[counter].question_correct_ans;
+        //var question_number = question_obj[counter].question_id;
         var result = [];
-        for (var j = 0; j < question_obj[i].question_options.length; j++) {
+        question_text.html(question_obj[counter].question_txt);
+
+        for (var j = 0; j < question_obj[counter].question_options.length; j++) {
             result.push('<li>');
             result.push('<input ' +
                 'type="radio" ' +
-                'name="' + question_obj[i].question_id + '" ' +
-                'value="' + question_obj[i].question_options[j] + '">');
+                'name="' + question_obj[counter].question_id + '" ' +
+                'value="' + question_obj[counter].question_options[j] + '">');
 
-            result.push("<b>" + question_obj[i].question_options[j] + "</b>");
+            result.push("<b>" + question_obj[counter].question_options[j] + "</b>");
             result.push('</li>');
             answer_choices.html(result.join(''));
         }
-
-        $('input[name="' + question_obj[i].question_id + '"]:radio').on('click', function () {
+        $('input[name="' + question_obj[counter].question_id + '"]:radio').on('click', function () {
             var selected_answer_choice = $(this).val();
             var radioName = $(this).attr("name");
             if ($('input:radio:checked')) {
                 $(":radio[name='" + radioName + "']").attr({"disabled": true});
             }
-            checkCorrectAnswer(question_correct_answer, selected_answer_choice, question_obj);
+            checkCorrectAnswer(question_correct_answer, selected_answer_choice, question_obj, counter);
         });
+
     }
-    question_points.html("Score : " + '<b>' + totalPoints + '</b>');
+    //If counter exceeds the array length, the game ended.
+    else {
+        onGameEnd();
+    }
 }
 
 //Sets a flag if correct answer is given by the user
 var correctAnsFlag = false;
 
-function checkCorrectAnswer(question_correct_answer, selected_answer_choice, question_obj) {
+function checkCorrectAnswer(question_correct_answer, selected_answer_choice, question_obj, counter) {
     if (question_correct_answer == selected_answer_choice) {
         console.log("Correct Answer selected!");
         correctAnsFlag = true;
@@ -78,17 +113,16 @@ function checkCorrectAnswer(question_correct_answer, selected_answer_choice, que
         console.log("Incorrect Answer");
         correctAnsFlag = false;
     }
-    UpdatePoints(correctAnsFlag, question_obj);
+    UpdatePoints(correctAnsFlag, question_obj, counter);
 }
-
 
 //Calculate Total points scored by player
 var totalPoints = 0;
 
-function UpdatePoints(flag, question_obj) {
-    for (var i = 0; i < question_obj.length; i++) {
+function UpdatePoints(flag, question_obj, counter) {
+    if (counter < question_obj.length) {
         if (flag) {
-            totalPoints += question_obj[i].question_points;
+            totalPoints += question_obj[counter].question_points;
         }
     }
     console.log(totalPoints);
@@ -98,6 +132,7 @@ var seconds = 0,
     minutes = 0,
     hours = 0;
 
+//Function to calculate the total time elapsed.
 function countDownTimer() {
     seconds++;
     if (seconds >= 60) {
@@ -119,6 +154,7 @@ function countDownTimer() {
 
 var setTimer;
 
+//Call countDownTimer() every one second to show timer.
 function startTimer() {
     setTimer = true;
     if (setTimer) {
@@ -126,51 +162,19 @@ function startTimer() {
     }
 }
 
-function gameRenderingConfigs(question_arr, arr_len) {
-    var startGameCounter = 0;
-    var progressBarHandler = $('.progress-meter');
-    var progressCounter = 0;
-    var progress_length;
-    var progress_bar_text = $('.progress-meter-text');
-    var progress_bar_wrapper = $('.progress--bar');
-    var loading_wrapper = $('.loading--wrapper');
-
-    $('#next-question').on('click', function () {
-        progress_bar_wrapper.css("display", "block");
-        startGameCounter++;
-        if (startGameCounter === 1) {
-            loading_wrapper.show().delay(3000).fadeOut();
-            renderGameAfterLoad();
-        }
-
-        if (startGameCounter >= 2) {
-            progressCounter++;
-            progress_length = Math.round((progressCounter / arr_len) * 100);
-            progressBarHandler.width(progress_length + "%");
-            progress_bar_text.html(progress_length + "%");
-        }
-        $(this).text("Submit");
-        onGameEnd(question_arr);
-        var question_obj = question_arr.splice(0, 1);
-        renderQuestionObjects(question_obj, arr_len);
+// Function call after game is ended
+function onGameEnd() {
+    setTimer = false;
+    $('#check-stats').css({display: "inline-block"});
+    $('.question--content').css({color: "#ccc"});
+    $('#next-question').attr({
+        "disabled": 'true',
+        "style": "cursor:not-allowed",
+        "title": "Game over, cannot submit!"
     });
 }
 
-
-function onGameEnd(question_arr) {
-    if (question_arr.length === 0) {
-        setTimer = false;
-        $('#check-stats').css({display: "inline-block"});
-        $('.question--content').css({color: "#ccc"});
-        $('#next-question').attr({
-            "disabled": 'true',
-            "style": "cursor:not-allowed",
-            "title": "Game over, cannot submit!"
-        });
-    }
-}
-
-
+//Render the game contents after the loading is completed
 function renderGameAfterLoad() {
     var game_wrapper = $('.game--wrapper');
     var submit_button = $('#next-question');
@@ -183,4 +187,13 @@ function renderGameAfterLoad() {
         submit_button.attr("disabled", false);
         submit_btn_wrapper.css("margin-top", 0);
     }, 3500);
+}
+
+function renderPlayerStatsScreen() {
+    var player_stats = $('#check-stats');
+    player_stats.on('click', function () {
+        $('.player-stats--wrapper').fadeIn();
+        $('.game--wrapper').css('display', 'none');
+        $('.submit--buttons').css('display', 'none');
+    });
 }

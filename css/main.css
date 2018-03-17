@@ -404,11 +404,6 @@ input[type='radio']:checked:before {
     color: white;
 }
 
-.btn-stats a {
-    color: white;
-    padding: 24px;
-}
-
 .btn-submit:hover, .btn-stats:hover {
     background-color: white;
     border: 1px solid #1779ba;
@@ -461,6 +456,12 @@ input[type='radio']:checked:before {
 }
 
 .game--wrapper {
+    display: none;
+}
+
+.player-stats--wrapper {
+    color: white;
+    text-align: center;
     display: none;
 }
 
