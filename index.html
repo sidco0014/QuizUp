@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css"
           crossorigin="anonymous"/>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
 </head>
 <body>
 <nav>
@@ -37,10 +39,14 @@
 <!--Player Stats after game completion -->
 <div class="player-stats--wrapper">
     <h3>Player Stats:</h3>
-    <p class="incorrect_questions"></p>
-    <p class="correct_option"></p>
-    <p class="selection_option"></p>
+    <!--<p class="question&#45;&#45;id"></p>-->
+    <!--<p class="correct&#45;&#45;option"></p>-->
+    <!--<p class="selection&#45;&#45;option"></p>-->
 </div>
+<div class="player--graph">
+    <canvas id="myChart"></canvas>
+</div>
+
 <!--./Player Stats after game completion -->
 
 <div class="game--wrapper">

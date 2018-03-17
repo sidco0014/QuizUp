@@ -50,6 +50,7 @@ function gameRenderingConfigs(question_arr, arr_len) {
         if (startGameCounter === 1) {
             loading_wrapper.show().delay(3000).fadeOut();
             renderGameAfterLoad();
+            $(this).text("Submit");
         }
 
         if (startGameCounter >= 2 && startGameCounter <= question_arr.length + 1) {
@@ -58,19 +59,21 @@ function gameRenderingConfigs(question_arr, arr_len) {
             progressBarHandler.width(progress_length + "%");
             progress_bar_text.html(progress_length + "%");
         }
-        $(this).text("Submit");
+
         question_points.html("Score : " + '<b>' + totalPoints + '</b>');
         renderQuestionObjects(question_arr, startGameCounter - 1);
     });
 }
 
 //Render Question details
+var playerQuestionMap = [];
+
 function renderQuestionObjects(question_obj, counter) {
     if (counter < question_obj.length) {
         var question_text = $('.question--text');
         var answer_choices = $('.answer--choices');
         var question_correct_answer = question_obj[counter].question_correct_ans;
-        //var question_number = question_obj[counter].question_id;
+        var question_number = question_obj[counter].question_id;
         var result = [];
         question_text.html(question_obj[counter].question_txt);
 
@@ -91,9 +94,9 @@ function renderQuestionObjects(question_obj, counter) {
             if ($('input:radio:checked')) {
                 $(":radio[name='" + radioName + "']").attr({"disabled": true});
             }
+            calculatePlayerQuestionDetails(question_number, question_correct_answer, selected_answer_choice);
             checkCorrectAnswer(question_correct_answer, selected_answer_choice, question_obj, counter);
         });
-
     }
     //If counter exceeds the array length, the game ended.
     else {
@@ -118,14 +121,17 @@ function checkCorrectAnswer(question_correct_answer, selected_answer_choice, que
 
 //Calculate Total points scored by player
 var totalPoints = 0;
+var points_earned = [];
 
 function UpdatePoints(flag, question_obj, counter) {
     if (counter < question_obj.length) {
         if (flag) {
             totalPoints += question_obj[counter].question_points;
+
         }
+        points_earned.push(totalPoints);
     }
-    console.log(totalPoints);
+    console.log(points_earned);
 }
 
 var seconds = 0,
@@ -191,9 +197,79 @@ function renderGameAfterLoad() {
 
 function renderPlayerStatsScreen() {
     var player_stats = $('#check-stats');
+    // var question_id = $('.question--id');
+    // var correct_option = $('.correct--option');
+    // var selection_option = $('.selection--option');
     player_stats.on('click', function () {
         $('.player-stats--wrapper').fadeIn();
         $('.game--wrapper').css('display', 'none');
         $('.submit--buttons').css('display', 'none');
+        $('#myChart').css('display', 'block');
+        // for (var i = 0; i < playerQuestionMap.length; i++) {
+        //     question_id.html(playerQuestionMap[i].question_id);
+        //     correct_option.html(playerQuestionMap[i].correct_ans);
+        //     selection_option.html(playerQuestionMap[i].selected_ans);
+        // }
+        createPlayerGraph();
+
+    });
+
+}
+
+function calculatePlayerQuestionDetails(question_number, question_correct_answer, selected_answer_choice) {
+    playerQuestionMap.push({
+        'question_id': question_number,
+        'correct_ans': question_correct_answer,
+        'selected_ans': selected_answer_choice
+    });
+    return playerQuestionMap;
+}
+
+function createPlayerGraph() {
+    var ctx = document.getElementById("myChart").getContext('2d');
+    Chart.defaults.global.defaultFontColor = '#EEEEEE';
+    Chart.defaults.global.defaultFontFamily = '\'Montserrat\', sans-serif';
+    Chart.defaults.global.defaultFontStyle = '600';
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Q1", "Q2", "Q3", "Q4"],
+            datasets: [{
+                label: 'Score',
+                data: points_earned,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            legend: {
+                labels: {
+                    // This more specific font property overrides the global property
+                    fontColor: 'white'
+                }
+            }
+        }
     });
 }

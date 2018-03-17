@@ -465,11 +465,25 @@ input[type='radio']:checked:before {
     display: none;
 }
 
+.player-stats--wrapper p {
+    color: white;
+}
+.player--graph {
+    width: 60%;
+    padding: 20px;
+    margin-left: 20px;
+}
+
+#myChart {
+    display: none;
+}
+
 /*
     ====================================================================
     Media Queries for small screen and tablet devices for responsiveness
     ====================================================================
 */
+
 @media only screen and (max-width: 768px) {
 
     .timer {
