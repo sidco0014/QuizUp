@@ -2,31 +2,31 @@ $(document).ready(function () {
     var question_arr = [
         {
             question_id: 'Q_1',
-            question_txt: "Today is what day?",
+            question_txt: "Who designed and created Bitcoin?",
             question_points: 100,
-            question_options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-            question_correct_ans: 'Wednesday'
+            question_options: ['Chris Larsen', 'Satoshi Nakamoto', 'Charlie Lee', 'Vitalik'],
+            question_correct_ans: 'Satoshi Nakamoto'
         },
         {
             question_id: 'Q_2',
-            question_txt: "What date is your birthday?",
+            question_txt: "What date is the USA Independence on?",
             question_points: 100,
-            question_options: [14, 15, 16, 17],
-            question_correct_ans: 14
+            question_options: ['July 4', 'July 14', 'June 4', 'June 14'],
+            question_correct_ans: 'July 4'
         },
         {
             question_id: 'Q_3',
-            question_txt: "What is the Bitcoin Value today?",
+            question_txt: "Who directed the movie 'Avengers: Infinity War'?",
             question_points: 100,
-            question_options: [10000, 9000, 8000, 7000],
-            question_correct_ans: 8000
+            question_options: ['C. Nolan', 'Anthony Russo', 'D.Jim', 'Joss Whedon'],
+            question_correct_ans: 'Anthony Russo'
         },
         {
             question_id: 'Q_4',
-            question_txt: "What is the ETH Value today?",
+            question_txt: "In which year did Neil Armstrong land on moon?",
             question_points: 100,
-            question_options: [600, 700, 650, 550],
-            question_correct_ans: 600
+            question_options: [1968, 1969, 1958, 1978],
+            question_correct_ans: 1968
         }
     ];
     var arr_len = question_arr.length;
