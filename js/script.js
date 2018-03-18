@@ -33,6 +33,16 @@ $(document).ready(function () {
     gameRenderingConfigs(question_arr, arr_len);
     renderPlayerStatsScreen();
 });
+//Global Variables
+var playerQuestionMap = [];
+var correctAnsFlag = false;
+var totalPoints = 0;
+var points_earned = [];
+var seconds = 0,
+    minutes = 0,
+    hours = 0;
+var start_timer;
+var end_timer;
 
 function gameRenderingConfigs(question_arr, arr_len) {
     var startGameCounter = 0;
@@ -66,8 +76,6 @@ function gameRenderingConfigs(question_arr, arr_len) {
 }
 
 //Render Question details
-var playerQuestionMap = [];
-
 function renderQuestionObjects(question_obj, counter) {
     if (counter < question_obj.length) {
         var question_text = $('.question--text');
@@ -105,8 +113,6 @@ function renderQuestionObjects(question_obj, counter) {
 }
 
 //Sets a flag if correct answer is given by the user
-var correctAnsFlag = false;
-
 function checkCorrectAnswer(question_correct_answer, selected_answer_choice, question_obj, counter) {
     if (question_correct_answer == selected_answer_choice) {
         console.log("Correct Answer selected!");
@@ -120,23 +126,15 @@ function checkCorrectAnswer(question_correct_answer, selected_answer_choice, que
 }
 
 //Calculate Total points scored by player
-var totalPoints = 0;
-var points_earned = [];
-
 function UpdatePoints(flag, question_obj, counter) {
     if (counter < question_obj.length) {
         if (flag) {
             totalPoints += question_obj[counter].question_points;
-
         }
         points_earned.push(totalPoints);
     }
     console.log(points_earned);
 }
-
-var seconds = 0,
-    minutes = 0,
-    hours = 0;
 
 //Function to calculate the total time elapsed.
 function countDownTimer() {
@@ -158,26 +156,24 @@ function countDownTimer() {
     startTimer();
 }
 
-var setTimer;
 
 //Call countDownTimer() every one second to show timer.
 function startTimer() {
-    setTimer = true;
-    if (setTimer) {
-        setTimeout(countDownTimer, 1000);
-    }
+    start_timer = setTimeout(countDownTimer, 1000);
 }
+
 
 // Function call after game is ended
 function onGameEnd() {
-    setTimer = false;
     $('#check-stats').css({display: "inline-block"});
-    $('.question--content').css({color: "#ccc"});
     $('#next-question').attr({
         "disabled": 'true',
         "style": "cursor:not-allowed",
         "title": "Game over, cannot submit!"
     });
+    clearTimeout(start_timer);
+    end_timer = $('#time--elapsed').html();
+    console.log(end_timer);
 }
 
 //Render the game contents after the loading is completed
@@ -211,9 +207,7 @@ function renderPlayerStatsScreen() {
         //     selection_option.html(playerQuestionMap[i].selected_ans);
         // }
         createPlayerGraph();
-
     });
-
 }
 
 function calculatePlayerQuestionDetails(question_number, question_correct_answer, selected_answer_choice) {
@@ -260,7 +254,7 @@ function createPlayerGraph() {
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true
                     }
                 }]
             },
