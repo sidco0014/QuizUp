@@ -26,9 +26,11 @@
 </head>
 <body>
 <nav>
-    <div class="row">
-        <div class="large-12 columns">
-            <h1 class="title">QuizzUp!</h1>
+    <div class="header">
+        <h1 class="title">QuizzUp!</h1>
+        <div class="header--content">
+            <h5 id="display_player_name"></h5>
+            <h5 id="time--elapsed"></h5>
         </div>
     </div>
 </nav>
@@ -43,9 +45,12 @@
         <canvas id="myChart"></canvas>
     </div>
     <div class="player--details">
-        <!--<p class="question&#45;&#45;id"></p>-->
-        <!--<p class="correct&#45;&#45;option"></p>-->
-        <!--<p class="selection&#45;&#45;option"></p>-->
+        <p class="total--score"></p>
+        <p class="total--percent"></p>
+        <p class="total--time"></p>
+        <p class="question--id"></p>
+        <p class="correct--option"></p>
+        <p class="selection--option"></p>
     </div>
 </div>
 
@@ -62,9 +67,6 @@
           </span>
         </div>
     </div>
-    <div class="timer">
-        <h4 id="time--elapsed"></h4>
-    </div>
     <section>
         <div class="container">
             <div class="row">
@@ -80,6 +82,12 @@
         </div>
     </section>
 </div>
+<div class="player--name">
+    <h4>Enter your name: </h4>
+    <input id="player_name" type="text"/>
+</div>
+
+
 <div class="submit--buttons">
     <button class="btn-submit" id="next-question" value="Start Game">Start Game</button>
     <button class="btn-stats" id="check-stats">Check Stats</button>

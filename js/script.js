@@ -31,7 +31,8 @@ $(document).ready(function () {
     ];
     var arr_len = question_arr.length;
     gameRenderingConfigs(question_arr, arr_len);
-    renderPlayerStatsScreen();
+    renderPlayerStatsScreen(arr_len);
+
 });
 //Global Variables
 var playerQuestionMap = [];
@@ -43,6 +44,7 @@ var seconds = 0,
     hours = 0;
 var start_timer;
 var end_timer;
+var player_name;
 
 function gameRenderingConfigs(question_arr, arr_len) {
     var startGameCounter = 0;
@@ -51,11 +53,13 @@ function gameRenderingConfigs(question_arr, arr_len) {
     var progress_bar_text = $('.progress-meter-text');
     var progress_bar_wrapper = $('.progress--bar');
     var loading_wrapper = $('.loading--wrapper');
+    var player_name_wrapper = $('.player--name');
     var progressCounter = 0;
 
     $('#next-question').on('click', function () {
-        progress_bar_wrapper.css("display", "block");
+        player_name_wrapper.css("display", "none");
         var question_points = $('.question--points');
+        getPlayerName();
         startGameCounter++;
         if (startGameCounter === 1) {
             loading_wrapper.show().delay(3000).fadeOut();
@@ -64,6 +68,7 @@ function gameRenderingConfigs(question_arr, arr_len) {
         }
 
         if (startGameCounter >= 2 && startGameCounter <= question_arr.length + 1) {
+            progress_bar_wrapper.css("display", "block");
             progressCounter++;
             progress_length = Math.round((progressCounter / arr_len) * 100);
             progressBarHandler.width(progress_length + "%");
@@ -152,7 +157,7 @@ function countDownTimer() {
         (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" +
         (seconds > 9 ? seconds : "0" + seconds);
 
-    $('#time--elapsed').html(timeContext);
+    $('#time--elapsed').html("Time elapsed : " + timeContext);
     startTimer();
 }
 
@@ -181,6 +186,7 @@ function renderGameAfterLoad() {
     var game_wrapper = $('.game--wrapper');
     var submit_button = $('#next-question');
     var submit_btn_wrapper = $('.submit--buttons');
+    var display_player_name = $('#display_player_name');
     submit_button.attr("disabled", true);
 
     setTimeout(function () {
@@ -188,19 +194,25 @@ function renderGameAfterLoad() {
         countDownTimer();
         submit_button.attr("disabled", false);
         submit_btn_wrapper.css("margin-top", 0);
+        display_player_name.html("Welcome " + player_name + " !");
     }, 3500);
 }
 
-function renderPlayerStatsScreen() {
+function renderPlayerStatsScreen(arr_len) {
     var player_stats = $('#check-stats');
-    // var question_id = $('.question--id');
-    // var correct_option = $('.correct--option');
-    // var selection_option = $('.selection--option');
+    var question_number = $('.question--id');
+    var correct_option = $('.correct--option');
+    var selection_option = $('.selection--option');
+    var score = $('.total--score');
+    var percent = $('.total--percent');
     player_stats.on('click', function () {
         $('.player-stats--wrapper').fadeIn();
         $('.game--wrapper').css('display', 'none');
         $('.submit--buttons').css('display', 'none');
         $('#myChart').css('display', 'block');
+        score.html("Score : " + "<b>" + totalPoints + "/" + (arr_len * 100) + "</b>");
+        percent.html("Percent : " + "<b>" + Math.round((totalPoints / (arr_len * 100)) * 100) + "%</b>");
+
         // for (var i = 0; i < playerQuestionMap.length; i++) {
         //     question_id.html(playerQuestionMap[i].question_id);
         //     correct_option.html(playerQuestionMap[i].correct_ans);
@@ -217,6 +229,14 @@ function calculatePlayerQuestionDetails(question_number, question_correct_answer
         'selected_ans': selected_answer_choice
     });
     return playerQuestionMap;
+}
+
+function getPlayerName() {
+    player_name = $('#player_name').val();
+    if (player_name.length === 0) {
+        player_name = 'Guest'
+    }
+    console.log(player_name);
 }
 
 function createPlayerGraph() {
@@ -260,7 +280,6 @@ function createPlayerGraph() {
             },
             legend: {
                 labels: {
-                    // This more specific font property overrides the global property
                     fontColor: 'white'
                 }
             }
