@@ -440,6 +440,11 @@ input[type='radio']:checked:before {
     .player--name {
         width: 35%;
     }
+
+    .player--details {
+        width: 100%;
+        float: none;
+    }
 }
 
 @media only screen and (max-width: 400px) {
