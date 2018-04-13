@@ -7,3 +7,6 @@ A Web based application to render and play quiz game using JavaScript, JQuery an
  - Can easily add new set of questions, answer choices and configure the correct answer.
  - Timer to determine how long the player takes to complete the quiz.
  - Charts.js used to render the score graph at end of quiz along with total time taken, score and accuracy percent.
+
+# Link
+https://sidco0014.github.io/QuizzUp/
