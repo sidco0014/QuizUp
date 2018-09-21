@@ -321,7 +321,7 @@ input[type='radio']:checked:before {
 }
 
 .player--graph {
-    width: 60%;
+    width: 58%;
     padding: 20px;
     margin-left: 20px;
     float: left;
